@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0b19">
+  <meta name="description" content="NEXA CNC — офлайн-помощник начинающего токаря по FANUC 0i-TD">
+  <title>NEXA CNC — Академия токаря</title>
+  <style>
+:root{color-scheme:dark;--bg:#090912;--surface:#151426;--panel:#1d1b31;--line:#322f4a;--text:#f2f0ff;--muted:#b0adc7;--violet:#b58cff;--cyan:#70e7ef;--green:#8ee8bb;--red:#ffadad;--radius:18px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 80% -10%,#302049 0,transparent 40%),radial-gradient(ellipse at 2% 35%,#141a36 0,transparent 32%),var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}.app-shell{max-width:900px;margin:auto;min-height:100dvh;padding-bottom:calc(94px + env(safe-area-inset-bottom))}.topbar{height:81px;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #302a47;background:#0f0e1bc4}.brand{display:flex;gap:12px;align-items:center}.brand-mark{width:44px;height:44px;border:1px solid #7852ba;border-radius:14px;display:grid;place-items:center;font-size:26px;font-weight:900;box-shadow:0 0 23px #965af32a;background:linear-gradient(135deg,#2c1c48,#15112c)}.brand-mark span{color:var(--cyan);font-size:15px;margin-left:1px}.brand strong{display:block;font-size:19px;letter-spacing:1.2px}.brand em{font-style:normal;color:var(--violet)}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:1.6px;padding-top:3px}.offline{border:1px solid #3e725f;background:#123b2b55;border-radius:25px;color:var(--green);font-size:10px;font-weight:800;letter-spacing:.8px;padding:8px 10px;white-space:nowrap}.dot{width:6px;height:6px;display:inline-block;background:var(--green);border-radius:100%;margin-right:4px}main{padding:22px;max-width:850px;margin:auto}.eyebrow{color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:750;margin:0 0 8px}.page-title{font-size:clamp(26px,5vw,36px);letter-spacing:-.9px;line-height:1.18;margin:0 0 8px;font-weight:850}.page-title span{color:var(--violet)}.subtitle{color:var(--muted);line-height:1.55;margin:0 0 22px;font-size:14px}.hero{background:linear-gradient(125deg,#292042 0%,#181729 62%,#111c2e 100%);border:1px solid #55437b;border-radius:24px;padding:23px;position:relative;overflow:hidden;box-shadow:0 6px 40px #0002}.hero:after{content:'✦';font-size:120px;color:#b18bff0d;position:absolute;right:12px;top:2px;pointer-events:none}.hero h1{font-size:30px;line-height:1.2;margin:10px 0 12px}.hero p{max-width:550px;line-height:1.5;color:#d0cbe1;font-size:14px}.hero .button{position:relative;z-index:1}.tag{display:inline-block;border:1px solid #725d95;padding:5px 10px;border-radius:8px;background:#46326760;color:#d8c1ff;font-size:11px;font-weight:800;letter-spacing:.4px}.tag.green{border-color:#3e735d;color:var(--green);background:#164d344a}.button{border:1px solid #71509d;border-radius:12px;padding:11px 15px;background:linear-gradient(130deg,#8a55e4,#6847be);font-size:13px;font-weight:800;color:white;display:inline-flex;gap:8px;align-items:center;justify-content:center;min-height:42px}.button.secondary{background:#25213b;border-color:#51446f}.button.ghost{background:transparent;border-color:#504662;color:#d6caed}.button.danger{background:#47202d;border-color:#7e374c}.button.full{width:100%}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:25px 0 14px}.section-head h2{font-size:17px;margin:0}.section-head small{color:var(--muted)}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.action-card,.lesson-card{display:block;width:100%;text-align:left;border:1px solid #37324e;border-radius:18px;background:linear-gradient(140deg,#211d34,#151427);color:var(--text);padding:17px;min-height:126px}.action-card:hover,.lesson-card:hover{border-color:#9f7dda}.card-ico{font-size:26px;display:block;margin-bottom:14px}.action-card strong,.lesson-card strong{display:block;font-size:15px;margin-bottom:5px}.action-card small,.lesson-card small{display:block;color:var(--muted);font-size:12px;line-height:1.4}.notice{border:1px solid #74633d;background:#342b184a;color:#f7dca1;padding:13px 15px;border-radius:14px;font-size:12px;line-height:1.55;margin-top:17px}.notice strong{color:#ffe2a5}.statbar{border:1px solid var(--line);background:#151426;border-radius:15px;padding:16px;display:flex;justify-content:space-between;gap:12px;align-items:center}.statbar strong{color:var(--cyan);font-size:24px}.progress{width:100%;height:7px;background:#312a4d;border-radius:10px;overflow:hidden;margin-top:10px}.progress div{background:linear-gradient(90deg,#7659e6,#73d5e7);height:100%;transition:width .2s}.lesson-card{min-height:114px}.lesson-card-row{display:flex;align-items:center;gap:12px}.lesson-card-row .card-ico{margin:0}.lesson-card .tag{margin-top:12px}.back{padding:0;background:transparent;border:0;color:var(--violet);font-weight:700;margin-bottom:20px}.step{display:flex;gap:12px;margin:10px 0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px}.step.checked{border-color:#376958;background:#162a2a}.step input{width:23px;height:23px;accent-color:#ab8dff;flex:0 0 23px;margin:0}.step label{flex:1;cursor:pointer}.step strong{display:block;font-size:14px;margin-bottom:6px}.step p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}.panel{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:18px;margin:12px 0}.muted{color:var(--muted)}.field{margin:12px 0}.field label{display:block;font-size:12px;color:#c7b8e0;margin-bottom:7px;font-weight:700}.field input,.field textarea,.field select{width:100%;background:#100f1f;color:var(--text);border:1px solid #4a3e62;border-radius:11px;padding:12px;min-height:44px}.field textarea{resize:vertical;min-height:100px}.tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.tool-btn{border:1px solid #53496f;border-radius:12px;background:#201b34;color:#e4dcfa;min-height:65px;display:flex;flex-direction:column;justify-content:center;gap:4px;align-items:center}.tool-btn.active{border-color:var(--cyan);background:#163b46}.tool-btn.has-data .tool-no{color:var(--green)}.tool-btn .tool-no{font-size:16px;font-weight:900}.tool-btn small{color:var(--muted);font-size:10px;text-align:center;width:95%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.record{padding:15px;background:#1a192b;border:1px solid var(--line);border-radius:15px;margin:11px 0}.record .date{color:var(--cyan);font-size:11px;font-weight:700}.record p{white-space:pre-wrap;line-height:1.55;overflow-wrap:anywhere;font-size:14px}.record img{max-width:100%;max-height:230px;object-fit:contain;border-radius:10px;border:1px solid var(--line)}.record-actions{display:flex;justify-content:flex-end}.code-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.code-card{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px}.code-card code{color:var(--cyan);font-weight:850;font-size:18px}.code-card strong{display:block;font-size:12px;margin:5px 0}.code-card small{color:var(--muted);font-size:11px;line-height:1.5;display:block}.calc-result{font-size:30px;font-weight:850;color:var(--cyan);margin:10px 0}.calc-result small{font-size:15px;color:var(--muted)}.bottomnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,900px);background:#100f1ef7;border-top:1px solid #3e345c;display:grid;grid-template-columns:repeat(6,1fr);padding:9px 9px calc(9px + env(safe-area-inset-bottom));z-index:5;backdrop-filter:blur(16px)}.bottomnav button{border:0;background:transparent;color:#a39cb8;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 1px;min-width:0;font-size:10px;font-weight:700}.bottomnav button.active{color:var(--violet)}.nav-icon{font-size:24px;line-height:1}#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#35294c;color:white;border:1px solid #8d64ca;border-radius:12px;padding:12px 16px;z-index:9;max-width:86vw;font-size:13px;display:none;text-align:center}.loading{text-align:center;padding:90px 0;color:var(--muted)}.inline-actions{display:flex;flex-wrap:wrap;gap:9px}.thin{border:none;border-top:1px solid var(--line);margin:17px 0}.preview-note{font-size:11px;color:#b5adc7}.checklist{display:grid;gap:9px}.checkitem{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;padding:10px;border:1px solid var(--line);border-radius:11px;background:#1a192b}.checkitem input{accent-color:#a885f8;width:20px;height:20px}.checkitem label{flex:1}.notice a{color:#ffe3ae}@media(max-width:540px){.topbar{height:75px;padding:13px 15px}.brand small{letter-spacing:.8px;font-size:8px}.brand strong{font-size:17px}.brand-mark{width:39px;height:39px}main{padding:18px 14px}.grid2{gap:9px}.action-card,.lesson-card{padding:14px;min-height:123px}.action-card strong,.lesson-card strong{font-size:13px}.hero{padding:19px}.hero h1{font-size:25px}.tool-grid{grid-template-columns:repeat(3,1fr)}.code-list{grid-template-columns:1fr}.offline{font-size:9px;padding:7px 8px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* NEXA CNC 0.2 virtual panel */
+.sim-alert{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:0 0 12px;font-size:10px;font-weight:900;letter-spacing:.7px;color:#94f6ca}.sim-alert span:first-child{color:#cab6ff}.sim-case{background:linear-gradient(145deg,#3b3950,#201f2e);border:1px solid #776591;border-radius:18px;padding:12px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;box-shadow:inset 0 2px 8px #ffffff09,0 10px 35px #0005}.sim-display-frame{min-width:0}.sim-display{background:#b7ced2;min-height:340px;border:6px solid #111722;border-radius:6px;box-shadow:inset 0 0 24px #718b93;color:#1f3d4b;padding:10px 9px;display:flex;flex-direction:column;font-family:ui-monospace,Consolas,monospace;font-size:11px}.sim-lcd-top,.sim-lcd-bottom,.sim-lcd-title{display:flex;justify-content:space-between;gap:4px}.sim-lcd-top{font-weight:900;letter-spacing:.1px;border-bottom:1px solid #749ba7;padding-bottom:5px;font-size:9px}.sim-lcd-title{font-size:14px;padding:7px 0;font-weight:900}.sim-lcd-title span{color:#375363}.sim-lcd-content{flex:1;min-height:230px}.sim-lcd-bottom{border-top:1px solid #749ba7;padding-top:5px;font-size:9px;font-weight:800}.sim-lcd-entry{border-top:1px dashed #7ba4aa;padding:4px 2px;min-height:25px;overflow-wrap:anywhere}.cursor-sim{color:#3e707d;margin-left:2px}.sim-axes,.lcd-axes{display:grid;gap:14px;padding:19px 13px}.lcd-axes div{display:flex;justify-content:space-between;border-bottom:1px solid #8da8b0;font-size:27px;align-items:baseline}.lcd-axes strong{font-size:30px;letter-spacing:.4px}.lcd-label{font-weight:800;font-size:10px;letter-spacing:.7px;margin:5px 0}.lcd-footnote{font-size:10px;line-height:1.45;margin:8px 0;color:#35596a}.lcd-grid{font-size:11px}.lcd-grid-head,.lcd-grid-row{display:grid;grid-template-columns:1fr 2fr 2fr;align-items:center;padding:4px 7px;gap:5px}.lcd-grid-head{font-weight:900;border-bottom:1px solid #7194a4}.lcd-grid-row:nth-child(even){background:#d2e1df50}.lcd-grid-row.focus{background:#397b92;color:white;border-radius:3px}.lcd-program{padding:13px 8px;font-size:12px;line-height:1.9;white-space:normal}.lcd-plain{font-size:12px;line-height:1.6;padding:10px 0}.lcd-idle{padding:44px 0;text-align:center;font-weight:900}.sim-softkeys{display:flex;gap:4px;align-items:stretch;margin-top:7px;min-height:38px}.screen-soft{flex:1;min-width:0;background:#151921;border:1px solid #626b77;color:#c3f3f6;border-radius:5px;padding:8px 1px;font-size:10px;font-weight:900;box-shadow:inset 0 -3px #080b13}.screen-soft.selected{color:white;border-color:#bb8dfc;background:#61469b}.sim-softkey-help{text-align:center;font-size:9px;color:#b7a8d1;letter-spacing:1px;margin:8px 0}.sim-hardware{min-width:0}.sim-key-title{font-size:10px;font-weight:900;color:#c1b4d8;letter-spacing:.9px;margin:4px 0 9px}.sim-fkeys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:15px}.sim-fkey,.sim-key,.sim-arrows button{background:linear-gradient(#e0dce0,#aaa9bb);border:1px solid #78768b;color:#171b2c;border-radius:6px;font-size:10px;font-weight:850;min-height:36px;padding:6px 2px;box-shadow:0 4px 0 #181b28}.sim-fkey:active,.sim-key:active,.sim-arrows button:active{transform:translateY(2px);box-shadow:0 2px 0 #181b28}.sim-fkey.active{color:white;background:linear-gradient(#9568d4,#633e9f);border-color:#cbb0fa}.sim-data-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:15px}.sim-key{font-size:12px;min-height:38px}.sim-key.special{background:#7c6e99;color:white;border-color:#887db3;font-size:10px}.sim-arrows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:4px}.sim-meaning,.sim-mission{border:1px solid #504265;border-radius:16px;background:linear-gradient(120deg,#231f37,#151528);padding:16px;margin-top:15px}.sim-meaning p,.sim-mission p{color:#c8bfd7;font-size:13px;line-height:1.5;margin:8px 0 11px}.sim-meaning strong{color:#9de6e8}.sim-mission-top{display:flex;align-items:center;justify-content:space-between;gap:9px;font-size:12px}.sim-mission-top span{color:#9fe0e0}.sim-mission-list{display:flex;gap:6px;margin:14px 0}.sim-task-btn{width:42px;min-height:38px;border:1px solid #53466e;background:#211b35;color:#d6c7ee;border-radius:9px;font-weight:800}.sim-task-btn.active{background:#5a3d94;border-color:#bb90ff}.sim-feedback{margin-top:12px;color:#a8ecb5;font-size:12px;line-height:1.5;padding:10px;background:#163c3250;border:1px solid #38755a;border-radius:8px}@media(max-width:650px){.sim-case{display:block}.sim-display{min-height:300px}.sim-lcd-content{min-height:190px}.sim-hardware{margin-top:15px}.sim-data-keys{grid-template-columns:repeat(5,minmax(0,1fr))}.sim-fkeys{grid-template-columns:repeat(3,minmax(0,1fr))}.sim-softkeys{flex-wrap:nowrap}.sim-fkey,.sim-key{min-height:41px}.sim-arrows button{min-height:41px}}@media(max-width:370px){.sim-case{padding:9px}.sim-display{padding:8px 6px}.sim-lcd-top{font-size:8px}.lcd-axes strong{font-size:25px}.screen-soft{font-size:9px;padding:8px 1px}}
+
+/* New training lab - lightweight phone-first styles */
+.ot-headline{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.ot-live{flex-shrink:0;white-space:nowrap;color:#a9f3d6;background:#143c35;border:1px solid #2a6857;border-radius:8px;padding:7px 9px;font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.6px}.ot-warning{display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid #9c784a;border-radius:14px;background:linear-gradient(110deg,#402e1b,#251d24);line-height:1.5;font-size:12px;color:#f5dfb2}.ot-warning b{font-size:13px;color:#ffe3ae}.ot-stat{display:flex;gap:14px;align-items:center;margin:18px 0 22px;padding:16px 18px;border:1px solid #433e60;background:#1a192a;border-radius:16px}.ot-stat>div:first-child{display:flex;flex-direction:column;gap:4px}.ot-statlabel{font-size:10px;letter-spacing:1px;color:#aaa2bf;font-weight:750;white-space:nowrap}.ot-stat b{font-size:25px;color:#e7dbff;line-height:1}.ot-stat b small{font-size:14px;color:#8f88aa}.ot-progress{height:9px;border-radius:30px;background:#38314d;flex:1;overflow:hidden}.ot-progress div{height:100%;border-radius:30px;background:linear-gradient(90deg,#8e6de7,#76d1eb);transition:width .2s}.ot-percent{font:800 14px ui-monospace,monospace;color:#9fddf4}.ot-toolbar{display:flex;align-items:center;justify-content:space-between;margin:0 0 11px;color:#b6aacd;font-size:12px}.ot-toolbar select{min-height:38px;min-width:160px;padding:6px 11px;background:#231d3a;color:#e9ddff;border:1px solid #64527e;border-radius:10px}.ot-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px}.ot-tab{background:linear-gradient(155deg,#201c34,#151426);border:1px solid #413853;min-height:105px;border-radius:17px;color:#eee8fa;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;text-align:left;padding:16px}.ot-tab.active{border:1px solid #b69aff;background:linear-gradient(135deg,#3c2b5d,#26203b);box-shadow:0 0 0 1px #9c6df21d,0 0 30px #8d62f31c}.ot-tab .ot-tab-ico{font-size:29px;color:#bfa3ff;line-height:1}.ot-tab strong{font-size:15px;letter-spacing:.2px}.ot-tab small{font:700 11px ui-monospace,monospace;color:#98e1ea}.ot-section{border:1px solid #494264;border-radius:22px;background:linear-gradient(170deg,#211e33 0,#131325 78%);overflow:hidden;margin-top:10px}.ot-sectiontop{padding:22px 20px 4px}.ot-chapter{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#91c9e6}.ot-sectiontop h2{margin:7px 0;font-size:25px;line-height:1.3}.ot-sectiontop h2 span{color:#ba9bfe;font-weight:600}.ot-sectiontop p{font-size:13px;color:#c0b9d2;line-height:1.6;margin:0 0 14px}.ot-figure{border:1px solid #404962;border-radius:14px;background:radial-gradient(ellipse at 50% 5%,#25364b,#101e31 85%);margin:0 15px;overflow:hidden;padding:4px}.ot-figure svg{display:block;width:100%;height:auto}.ot-legend{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 10px 11px;color:#adc0d4;font-size:10px;letter-spacing:.3px}.ot-legend span:first-child{display:flex;align-items:center;gap:6px}.ot-legend i{width:7px;height:7px;border-radius:50%;display:inline-block}.ot-pillrow{display:flex;gap:10px;justify-content:center;padding:22px 16px 16px}.ot-pill{height:40px;width:40px;border-radius:12px;border:1px solid #655873;background:#29243c;color:#cbc4d8;font-weight:800}.ot-pill.active{border-color:#c5a3ff;background:#6849a4;color:white}.ot-pill.done{border-color:#4f9278;color:#a6f5cd}.ot-task{padding:18px 21px 24px;border-top:1px solid #3b3551;background:#171528}.ot-taskhead{display:flex;justify-content:space-between;gap:10px;align-items:center}.ot-stepbadge{color:#83dcfa;font-size:11px;letter-spacing:1.1px;font-weight:800}.ot-complete{color:#a2efd0;font-size:11px;font-weight:800}.ot-pending{color:#aca2bf;font-size:11px;font-weight:800}.ot-tasktitle{font-size:21px;line-height:1.3;margin:14px 0 6px}.ot-prompt{font-size:14px;color:#dbd7eb;line-height:1.65;margin:0 0 17px}.ot-options{display:grid;gap:9px}.ot-option{display:flex;align-items:center;gap:12px;border:1px solid #4d4467;background:#211d33;padding:13px;border-radius:13px;font-size:13px;line-height:1.4;cursor:pointer}.ot-option:has(input:checked){border-color:#b99cff;background:#34264a}.ot-option input{accent-color:#a47cff;width:17px;height:17px;flex-shrink:0}.ot-option-marker{background:#31294a;color:#c7b4ee;border:1px solid #5d4b78;border-radius:7px;width:27px;height:27px;display:grid;place-items:center;font:800 12px ui-monospace,monospace;flex-shrink:0}.ot-equation{display:block;font:700 18px/1.5 ui-monospace,monospace;color:#99e0f1;letter-spacing:.1px;margin-bottom:16px;padding:12px;background:#121c2b;border:1px solid #315064;border-radius:11px}.ot-fieldlabel{display:block;font-size:12px;font-weight:700;color:#c6b8e7;margin-bottom:8px}.ot-numberbox{display:flex;align-items:center;max-width:340px;border:1px solid #73569b;background:#110f21;border-radius:12px;overflow:hidden}.ot-numberbox input{width:100%;background:transparent;border:0;color:#f9f5ff;font:700 22px ui-monospace,monospace;padding:14px;min-width:0;outline:none}.ot-numberbox:focus-within{outline:2px solid #70e7ef;outline-offset:1px}.ot-numberbox span{color:#a99abc;font-size:13px;margin-right:16px}.ot-helper{display:block;color:#aaa3b9;margin:9px 0 0;line-height:1.5}.ot-taskactions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}.ot-hint,.ot-feedback{margin-top:13px;padding:14px;border-radius:12px;line-height:1.55;font-size:13px}.ot-hint{background:#282437;border:1px solid #6c5c79;color:#ddd3f7}.ot-feedback p{margin:6px 0 0}.ot-feedback.good{background:#162b2b;border:1px solid #39795f;color:#c5f6dc}.ot-feedback.bad{background:#3a2329;border:1px solid #83525f;color:#ffdad8}.ot-taskfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:24px;padding-top:17px;border-top:1px solid #38314e}.ot-footer{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.ot-source{color:#9790ac;font-size:11px;line-height:1.6;margin-bottom:16px}.ot-winner{margin-top:15px;background:#1c3d32;border:1px solid #498d71;padding:16px;color:#c0f8d9;border-radius:16px;font-weight:700}
+@media(max-width:590px){.ot-headline{display:block}.ot-live{display:inline-flex;margin:0 0 17px}.ot-sectiontop{padding:18px 15px 2px}.ot-task{padding:18px 14px 21px}.ot-tab{padding:12px;min-height:96px}.ot-tab strong{font-size:13px}.ot-tab .ot-tab-ico{font-size:24px}.ot-legend{font-size:9px}.ot-stat{padding:13px;gap:10px}.ot-statlabel{font-size:9px}.ot-taskactions .button{flex:1}.ot-taskfoot .button{min-width:0;font-size:12px;padding:10px}}
+@media(max-width:370px){.ot-tab{padding:9px}.ot-stat b{font-size:22px}.ot-taskactions .button{font-size:12px}.ot-prompt{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.ot-progress div{transition:none}}
+
+.bottomnav{grid-template-columns:repeat(7,1fr)}
+@media(max-width:390px){.bottomnav button{font-size:9px}.nav-icon{font-size:21px}}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">N<span>✦</span></div><div><strong>NEXA <em>CNC</em></strong><small>АКАДЕМИЯ ТОКАРЯ · 0.2 WEB + ТРЕНАЖЁР</small></div></div>
+      <span class="offline"><span class="dot"></span> OFFLINE</span>
+    </header>
+    <main id="app" tabindex="-1" aria-live="polite"><div class="loading">Загружаю Академию токаря…</div></main>
+    <nav class="bottomnav" aria-label="Основная навигация">
+      <button type="button" data-route="home" aria-label="Главная"><span class="nav-icon">⌂</span><span>Главная</span></button>
+      <button type="button" data-route="lessons" aria-label="Уроки"><span class="nav-icon">▤</span><span>Уроки</span></button>
+      <button type="button" data-route="tools" aria-label="Инструменты"><span class="nav-icon">⚙</span><span>Резцы</span></button>
+      <button type="button" data-route="codes" aria-label="Справочник"><span class="nav-icon">⌘</span><span>Коды</span></button>
+      <button type="button" data-route="trainer" aria-label="Тренажёр X, Z, G54"><span class="nav-icon">◎</span><span>Тренажёр</span></button>
+      <button type="button" data-route="simulator" aria-label="Учебный пульт"><span class="nav-icon">▦</span><span>Пульт</span></button>
+      <button type="button" data-route="diary" aria-label="Заметки"><span class="nav-icon">✎</span><span>Дневник</span></button>
+    </nav>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  root.CncData = api;
+})(typeof window !== 'undefined' ? window : globalThis, function () {
+  'use strict';
+  const lessons = [
+    {
+      id: 'safety', icon: '🛡️', name: 'Перед запуском', short: 'Проверки безопасности', tag: 'Обязательно',
+      intro: 'Эта карточка не разрешает запуск станка и не заменяет инструкцию работодателя. Её цель — помочь ничего не забыть при подготовке.',
+      steps: [
+        ['Рабочее место', 'Убедись, что ограждения, аварийный останов и зона обработки проверены по правилам предприятия. Не обходи блокировки.'],
+        ['Заготовка', 'Проверь надёжность зажима, вылет заготовки и допустимые обороты патрона по техкарте.'],
+        ['Оснастка', 'Сверь номер инструмента, держатель, вылет и отсутствие помех в зоне перемещения.'],
+        ['Координаты', 'Сверь активную систему координат и коррекции с заданием; не меняй значения наугад.'],
+        ['Пробная проверка', 'Согласуй проверку программы с ответственным наладчиком, используй предусмотренные станком режимы проверки и безопасную подачу.']
+      ]
+    },
+    {
+      id: 'g54', icon: '🎯', name: 'Рабочий ноль G54', short: 'Ноль детали и смещения', tag: 'FANUC 0i-TD',
+      intro: 'G54 — одна из рабочих систем координат детали. На токарных станках её применение и способ установки зависят от конфигурации, включая настройки изготовителя станка.',
+      steps: [
+        ['Найди технологический ноль', 'Определи по чертежу, где принят Z0 детали (например, торец), и как задан X0 (обычно ось шпинделя).'],
+        ['Уточни способ привязки', 'Проверь у наладчика, как именно на вашем EMCO задают ноль: через WORK/G54, смещение системы или базовый инструмент. Не смешивай методы.'],
+        ['Запиши значения до изменения', 'Посмотри активную систему координат и текущие значения WORK/GEOMETRY; запиши исходное состояние, прежде чем что-либо менять.'],
+        ['Проверь выбранную систему', 'Убедись, что программа использует нужную систему координат, а её ожидаемое положение соответствует техкарте.'],
+        ['Подтверди безопасно', 'Перед обработкой проведи предусмотренную на предприятии проверку с наладчиком: контроль позиции и траектории без риска столкновения.']
+      ]
+    },
+    {
+      id: 'x', icon: '📏', name: 'Геометрия X', short: 'Привязка по диаметру', tag: 'Инструмент',
+      intro: 'Геометрическая коррекция X связывает положение режущей кромки с системой координат. На многих токарных FANUC X задаётся диаметром, но это нужно подтвердить по настройке конкретного станка.',
+      steps: [
+        ['Номер резца и коррекции', 'Проверь установленный резец и связанный с ним номер коррекции; их соответствие зависит от наладки револьверной головки.'],
+        ['Проверь режим координат X', 'Уточни: X в диаметрах или радиусах, как обозначена ось и какое принято направление.'],
+        ['Метод измерения', 'Выполняй контрольный проход и измерение диаметра только по утверждённой технологии и с наставником, если ещё обучаешься.'],
+        ['Запиши измерение', 'Сохрани фактический измеренный диаметр в заметках и проверь предусмотренную изготовителем функцию вычисления коррекции.'],
+        ['Проверь результат', 'После корректировки проведи безопасную проверку и повторное измерение; GEOMETRY не путай с WEAR.']
+      ]
+    },
+    {
+      id: 'z', icon: '↔️', name: 'Геометрия Z', short: 'Привязка по торцу', tag: 'Инструмент',
+      intro: 'Геометрическая коррекция Z определяет положение вершины резца вдоль оси шпинделя. Выбранный Z0 детали и метод измерения должны соответствовать установленной системе координат.',
+      steps: [
+        ['Определи Z0', 'По чертежу и техкарте уточни, какая поверхность или база считается нулём Z.'],
+        ['Сверь опорный инструмент', 'Узнай, от какого инструмента и какой базы ведётся наладка на данном EMCO.'],
+        ['Определи контрольную поверхность', 'Проверку торца выполняй только разрешённым методом, соблюдая требования к ручным перемещениям.'],
+        ['Открой нужную коррекцию', 'Проверь GEOMETRY Z именно выбранного инструмента, запиши исходное значение и измерение.'],
+        ['Проверка без риска', 'После изменения проверь позицию и траекторию согласно регламенту станка; не запускай обработку только на основании этой подсказки.']
+      ]
+    },
+    {
+      id: 'wear', icon: '🧰', name: 'GEOMETRY и WEAR', short: 'Чем отличаются коррекции', tag: 'Основы',
+      intro: 'GEOMETRY хранит базовую привязку инструмента, WEAR — небольшие поправки. Это разные поля, и ошибка в любом из них может изменить реальную траекторию.',
+      steps: [
+        ['Базовая геометрия', 'Найди на экране OFFSETS/GEOMETRY основную коррекцию конкретного резца.'],
+        ['Поправка на износ', 'Найди WEAR для этого же номера. Это не замена первоначальной привязки резца.'],
+        ['Проверь единицы и знак', 'Уточни единицы, способ задания X и значение знака поправки; они могут зависеть от конфигурации.'],
+        ['Не переписывай без записи', 'Перед изменениями зафиксируй исходные значения, измеренную погрешность и номер инструмента.'],
+        ['Контроль детали', 'После согласованной корректировки оцени фактический размер детали и сохрани результат.']
+      ]
+    }
+  ];
+  const codes = [
+    ['G00', 'Быстрое позиционирование', 'Не используют как безопасную пробную траекторию: учитывай столкновения.'],
+    ['G01', 'Линейная интерполяция с подачей', 'Подача и оси должны соответствовать настройке.'],
+    ['G02', 'Круговая интерполяция по часовой стрелке', 'Плоскость, I/K и формат R уточняй по руководству.'],
+    ['G03', 'Круговая интерполяция против часовой стрелки', 'Проверяй выбор плоскости G18.'],
+    ['G18', 'Плоскость XZ', 'Типичный выбор для токарной обработки.'],
+    ['G21', 'Метрические единицы', 'Функциональность и начальный режим зависят от настройки.'],
+    ['G28', 'Возврат к референтной позиции', 'Может вызвать неожиданное перемещение; не применяй без проверки.'],
+    ['G40', 'Отмена коррекции радиуса вершины', 'Проверь допустимое место отмены.'],
+    ['G54', 'Рабочая система координат №1', 'Не равна геометрической коррекции инструмента.'],
+    ['G55', 'Рабочая система координат №2', 'Не изменяй действующие значения без разрешения.'],
+    ['G70', 'Чистовой цикл', 'Формат цикла зависит от варианта FANUC.'],
+    ['G71', 'Черновой цикл точения', 'Есть разные форматы Type I/II, одно-/двухстрочные.'],
+    ['G72', 'Черновой цикл подрезки', 'Синтаксис зависит от модели и настроек.'],
+    ['G74', 'Цикл канавок/сверления', 'Назначение и параметры нужно сверить по руководству.'],
+    ['G75', 'Цикл канавок', 'Не копируй шаблон с другого станка без проверки.'],
+    ['G76', 'Резьбонарезной цикл', 'Форматы G76 различаются; обязательна проверка техкарты.'],
+    ['G96', 'Постоянная скорость резания', 'Проверь ограничение максимальных оборотов.'],
+    ['G97', 'Постоянные обороты шпинделя', 'Не путай с G96.'],
+    ['G99', 'Подача на оборот (типичный FANUC 0i-T)', 'Режим подачи зависит от конкретной группы G-кодов.'],
+    ['M00', 'Обязательная остановка', 'Функции M-кодов определяются изготовителем станка.'],
+    ['M01', 'Опциональная остановка', 'Срабатывает при активном Optional Stop.'],
+    ['M03', 'Вращение шпинделя по часовой стрелке', 'Направление и назначение шпинделя проверять на EMCO.'],
+    ['M04', 'Вращение шпинделя против часовой стрелки', 'Проверять конфигурацию станка.'],
+    ['M05', 'Остановка шпинделя', 'Способ остановки зависит от станка.'],
+    ['M08', 'Включение СОЖ', 'M-коды зависят от изготовителя станка.'],
+    ['M09', 'Выключение СОЖ', 'M-коды зависят от изготовителя станка.'],
+    ['M30', 'Конец программы / сброс', 'Особенности возврата и сброса зависят от станка.']
+  ];
+  function rpm(vc, dia) {
+    if (!(Number.isFinite(vc) && Number.isFinite(dia) && vc > 0 && dia > 0)) return null;
+    return 1000 * vc / (Math.PI * dia);
+  }
+  function mmMin(feedRev, rpmValue) {
+    if (!(Number.isFinite(feedRev) && Number.isFinite(rpmValue) && feedRev > 0 && rpmValue > 0)) return null;
+    return feedRev * rpmValue;
+  }
+  function defaultState() {
+    return {
+      version: 1, machine: 'EMCOturn · FANUC 0i-TD',
+      lessonChecks: {}, tools: Array.from({length: 12}, (_, i) => ({position:i+1, name:'', kind:'', x:'', z:'', note:''})),
+      diary: [], checks: {}, lastUpdated: new Date().toISOString()
+    };
+  }
+  function normalizeState(value) {
+    const s = defaultState();
+    if (!value || typeof value !== 'object' || value.version !== 1) return s;
+    if (typeof value.machine === 'string') s.machine = value.machine.slice(0, 120);
+    if (value.lessonChecks && typeof value.lessonChecks === 'object') {
+      for (const lesson of lessons) {
+        const map = value.lessonChecks[lesson.id];
+        if (Array.isArray(map)) s.lessonChecks[lesson.id] = lesson.steps.map((_,i) => map[i] === true);
+      }
+    }
+    if (Array.isArray(value.tools)) s.tools = s.tools.map((t,i) => {
+      const src = value.tools[i];
+      if (!src || typeof src !== 'object') return t;
+      for (const key of ['name','kind','x','z','note']) if (typeof src[key] === 'string') t[key] = src[key].slice(0,key==='note'?600:90);
+      return t;
+    });
+    if (Array.isArray(value.diary)) s.diary = value.diary.slice(0,150).filter(d=>d && typeof d.text==='string' && typeof d.id==='string').map(d=>({
+      id:d.id.slice(0,80), date: typeof d.date==='string'?d.date.slice(0,40):'', text:d.text.slice(0,3000),
+      photo:typeof d.photo==='string' && /^data:image\/(jpeg|png|webp);base64,/i.test(d.photo) && d.photo.length<600000 ? d.photo : ''
+    }));
+    if (value.checks && typeof value.checks === 'object') for (const [k,v] of Object.entries(value.checks)) if (k.length<50 && typeof v === 'boolean') s.checks[k] = v;
+    return s;
+  }
+  return {lessons, codes, rpm, mmMin, defaultState, normalizeState};
+});
+
+</script>
+  <script>
+/* NEXA CNC 0.2 — Virtual panel (educational only, no machine access). */
+(() => {
+  'use strict';
+  const KEY = 'nexa-cnc-simulator-v2';
+  const nav = {
+    pos: {title:'POSITION',tabs:[['ABS','ABS'],['REL','REL'],['ALL','ALL']]},
+    prog:{title:'PROGRAM',tabs:[['DIR','DIR'],['EDIT','EDIT'],['MDI','MDI']]},
+    offset:{title:'OFFSET / SETTING',tabs:[['GEOM','GEOM'],['WEAR','WEAR'],['WORK','WORK'],['SET','SET']]},
+    system:{title:'SYSTEM',tabs:[['PARAM','PARAM'],['DGNOS','DGNOS'],['PMC','PMC']]},
+    message:{title:'MESSAGE',tabs:[['ALARM','ALARM'],['HISTORY','HISTORY']]},
+    graph:{title:'GRAPH',tabs:[['PATH','PATH'],['INFO','INFO']]}
+  };
+  const defaults = Object.fromEntries(Object.entries(nav).map(([key,value])=>[key,value.tabs[0][0]]));
+  const missions = [
+    {label:'Найти координаты X/Z',description:'Нажми POS и открой ABS — абсолютные координаты.',test:s=>s.page==='pos'&&s.tab==='ABS',why:'POS показывает координаты. ABS — абсолютные координаты в выбранной системе.'},
+    {label:'Найти рабочие смещения',description:'Открой OFFSET / SETTING → WORK, найди строку G54.',test:s=>s.page==='offset'&&s.tab==='WORK'&&s.row===0,why:'WORK — таблица рабочих смещений; G54 — один из наборов. Это не GEOMETRY.'},
+    {label:'Найти геометрию инструмента',description:'Открой OFFSET / SETTING → GEOM. Строка 01 учебная.',test:s=>s.page==='offset'&&s.tab==='GEOM'&&s.row===0,why:'GEOMETRY — базовые значения привязки инструмента, отдельно от поправки WEAR.'},
+    {label:'Найти поправку на износ',description:'Переключись с GEOM на WEAR.',test:s=>s.page==='offset'&&s.tab==='WEAR',why:'WEAR хранит небольшие поправки; здесь ничего не записывается в станок.'},
+    {label:'Найти программу',description:'Открой PROG → EDIT.',test:s=>s.page==='prog'&&s.tab==='EDIT',why:'PROG открывает раздел программ; доступные режимы редактирования зависят от панели и настроек.'},
+  ];
+  const s = {page:'pos', tab:'ABS',row:0,entry:'',info:'',help:false,mission:-1,completed:[],mode:'EDIT'};
+  try {
+    const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+    if(Array.isArray(saved.completed))s.completed=saved.completed.filter(n=>Number.isInteger(n)&&n>=0&&n<missions.length);
+  } catch (_) {}
+  let taskMessage='', missionTouched=false;
+  const htmlEscape = v=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({completed:s.completed}));}catch(_){}};
+  const softButtons=()=>nav[s.page].tabs.map(([id,label])=>`<button class="screen-soft ${s.tab===id?'selected':''}" data-sim-tab="${id}" aria-pressed="${s.tab===id}" aria-label="Экранная клавиша ${label}">${label}</button>`).join('');
+  const rows=(items,label)=>`<div class="lcd-grid" role="table" aria-label="${htmlEscape(label)}"><div class="lcd-grid-head"><span>№</span><span>X</span><span>Z</span></div>${items.map((r,i)=>`<div class="lcd-grid-row ${i===s.row?'focus':''}" role="row"><span>${r}</span><span>0.000</span><span>0.000</span></div>`).join('')}</div>`;
+  function screenView(){
+    if(s.page==='pos'){
+      const caption=s.tab==='ABS'?'АБСОЛЮТНЫЕ':s.tab==='REL'?'ОТНОСИТЕЛЬНЫЕ':'ОБЗОР';
+      return `<div class="lcd-label">${caption} КООРДИНАТЫ</div><div class="lcd-axes"><div><span>X</span><strong>000.000</strong></div><div><span>Z</span><strong>000.000</strong></div></div><p class="lcd-footnote">Учебные нули. Не являются реальными показаниями станка.</p>`;
+    }
+    if(s.page==='offset'){
+      if(s.tab==='GEOM'||s.tab==='WEAR')return `<div class="lcd-label">КОРРЕКЦИИ ИНСТРУМЕНТА · ${s.tab}</div>${rows(Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0')),'Инструментальные коррекции')}<p class="lcd-footnote">0.000 — только учебные значения. Стрелки выбирают строку.</p>`;
+      if(s.tab==='WORK')return `<div class="lcd-label">РАБОЧИЕ СМЕЩЕНИЯ · WORK</div>${rows(['G54','G55','G56','G57','G58','G59'],'Рабочие смещения')}<p class="lcd-footnote">Выбор строки ≠ изменение G54 на станке.</p>`;
+      return `<div class="lcd-label">SETTING</div><p class="lcd-plain">Настройки оператора и параметры отображения могут отличаться у конкретного EMCO.</p>`;
+    }
+    if(s.page==='prog'){
+      if(s.tab==='DIR')return `<div class="lcd-label">PROGRAM DIRECTORY</div><div class="lcd-program">O0001  TRAINING_DEMO<br>O0002  EMPTY_EXAMPLE</div><p class="lcd-footnote">Вымышленные номера, не прочитаны со станка.</p>`;
+      if(s.tab==='MDI')return `<div class="lcd-label">MDI · УЧЕБНАЯ ОБЛАСТЬ</div><div class="lcd-program">${htmlEscape(s.entry||'Вводи символы кнопками справа…')}</div><p class="lcd-footnote">Никаких команд не исполняется.</p>`;
+      return `<div class="lcd-label">PROGRAM · VIEW ONLY</div><div class="lcd-program">O0001 (TRAINING ONLY)<br>N10 (NO MOTION)<br>N20 (NO SPINDLE)<br>N30 M30</div><p class="lcd-footnote">Демонстрационный текст. Не производственная программа.</p>`;
+    }
+    if(s.page==='system')return `<div class="lcd-label">SYSTEM · ${s.tab}</div><p class="lcd-plain">${s.tab==='PARAM'?'Параметры ЧПУ влияют на работу оборудования. Здесь их нельзя менять.':s.tab==='DGNOS'?'Диагностика сигналов и состояния. Показывается только обучающее описание.':'PMC — логика взаимодействия оборудования, интерфейс зависит от изготовителя.'}</p>`;
+    if(s.page==='message')return `<div class="lcd-label">${s.tab==='ALARM'?'ALARM MESSAGE':'ALARM HISTORY'}</div><div class="lcd-idle">NO ACTIVE DEMO ALARMS</div><p class="lcd-footnote">Это не проверка действительных аварий станка.</p>`;
+    return `<div class="lcd-label">GRAPH · ${s.tab}</div><svg viewBox="0 0 300 140" width="100%" height="142" role="img" aria-label="Условная схема координат X и Z"><path d="M45 13V115H280" stroke="#39707c" stroke-width="2" fill="none"/><path d="M45 13l-5 9m5-9l5 9M280 115l-9-5m9 5l-9 5" stroke="#39707c" stroke-width="2"/><text x="24" y="17" fill="#245064">X</text><text x="286" y="134" fill="#245064">Z</text><path d="M65 95H120V75H180V50H247" stroke="#1c7091" stroke-dasharray="7 5" stroke-width="3" fill="none"/></svg><p class="lcd-footnote">Условная иллюстрация. Не симулятор траектории обработки.</p>`;
+  }
+  const functionButtons=[['pos','POS'],['prog','PROG'],['offset','OFS/SET'],['system','SYSTEM'],['message','MESSAGE'],['graph','GRAPH']];
+  const dataButtons=['7','8','9','X','4','5','6','Z','1','2','3','G','-','0','.','+','CAN','INPUT','RESET','HELP'];
+  function infoText(){
+    if(s.help)return `<div class="sim-meaning"><strong>Справка по ${htmlEscape(s.page.toUpperCase())} / ${htmlEscape(s.tab)}</strong><p>${htmlEscape(explain())}</p></div>`;
+    if(s.info)return `<div class="sim-meaning"><strong>Пояснение</strong><p>${htmlEscape(s.info)}</p></div>`;
+    return `<div class="sim-meaning"><strong>Нажимай кнопки</strong><p>Выбери раздел слева/под экраном, затем экранную клавишу. Все значения — учебные, без связи с ЧПУ.</p></div>`;
+  }
+  function explain(){
+    if(s.page==='pos')return 'POS открывает экран координат. ABS и REL различаются системой отсчёта; ALL даёт обзор. Числа здесь всегда демонстрационные.';
+    if(s.page==='prog')return 'PROG предназначен для просмотра программ и связанных функций. В этой версии просмотр без редактирования реального кода.';
+    if(s.page==='offset')return ({GEOM:'GEOMETRY хранит базовые коррекции инструмента X/Z. Нельзя приравнивать к G54.',WEAR:'WEAR — отдельные поправки на износ инструмента, не заменяют геометрию.',WORK:'WORK — рабочие смещения G54–G59; не являются номерами резцов.',SET:'SETTING — настройки оператора. Их расположение зависит от комплектации.'})[s.tab];
+    if(s.page==='system')return 'SYSTEM используется для просмотра системных разделов, параметров и диагностики. В учебном приложении только описание.';
+    if(s.page==='message')return 'MESSAGE открывает сообщения и историю аварий. Здесь аварии не считываются.';
+    return 'GRAPH — графическая функция, её наличие и возможности зависят от оснащения станка. Показана условная иллюстрация.';
+  }
+  function missionUI(){
+    const chosen=missions[s.mission];
+    return `<section class="sim-mission" aria-label="Учебные задания"><div class="sim-mission-top"><strong>🎯 Практика на пульте</strong><span>${s.completed.length} / ${missions.length} пройдено</span></div><div class="sim-mission-list">${missions.map((m,i)=>`<button data-sim-mission="${i}" class="sim-task-btn ${s.mission===i?'active':''}" aria-pressed="${s.mission===i}">${s.completed.includes(i)?'✓':'○'} ${i+1}</button>`).join('')}</div><strong>${chosen?htmlEscape(chosen.label):'Выбери учебное задание'}</strong><p>${chosen?htmlEscape(chosen.description):'Попробуй найти нужный экран без подсказок по расположению кнопок.'}</p>${chosen?`<button class="button secondary" data-sim-check="1">Проверить действие</button> <button class="button ghost" data-sim-hint="1">Подсказка</button>`:''}${taskMessage?`<div class="sim-feedback" role="status">${htmlEscape(taskMessage)}</div>`:''}</section>`;
+  }
+  function render(){
+    return `<button class="back" data-go="home">← Главная</button><p class="eyebrow">NEXA CNC 0.2 / ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ</p><h1 class="page-title">Пульт <span>FANUC 0i‑TD</span></h1><p class="subtitle">Интерактивная учебная модель интерфейса FANUC Series 0i-D. Не точная цифровая копия панели EMCO.</p>
+    <div class="sim-alert"><span>● DEMO · OFFLINE</span><span>НЕТ СВЯЗИ СО СТАНКОМ</span></div>
+    <section class="sim-case" aria-label="Виртуальная панель">
+      <div class="sim-display-frame"><div class="sim-display"><div class="sim-lcd-top"><span>FANUC SERIES 0i‑TD · TRAINING</span><span>O0000 N0000</span></div><div class="sim-lcd-title">${nav[s.page].title} <span>${s.tab}</span></div><div class="sim-lcd-content">${screenView()}</div><div class="sim-lcd-entry">&gt; ${htmlEscape(s.entry)}<span class="cursor-sim">▮</span></div><div class="sim-lcd-bottom"><span>SIM</span><span>EDIT</span><span>NO MACHINE LINK</span></div></div>
+      <div class="sim-softkeys">${softButtons()}</div><div class="sim-softkey-help">ЭКРАННЫЕ КЛАВИШИ · демонстрационный набор</div></div>
+      <div class="sim-hardware"><div class="sim-key-title">ФУНКЦИОНАЛЬНЫЕ КЛАВИШИ</div><div class="sim-fkeys">${functionButtons.map(([id,label])=>`<button class="sim-fkey ${s.page===id?'active':''}" data-sim-page="${id}" aria-pressed="${s.page===id}">${label}</button>`).join('')}</div>
+      <div class="sim-key-title">УЧЕБНАЯ КЛАВИАТУРА</div><div class="sim-data-keys">${dataButtons.map(k=>`<button data-sim-key="${k}" class="sim-key ${['INPUT','RESET','HELP'].includes(k)?'special':''}">${k}</button>`).join('')}</div>
+      <div class="sim-key-title">НАВИГАЦИЯ ПО СТРОКАМ</div><div class="sim-arrows"><button data-sim-nav="pageup">PAGE ↑</button><button data-sim-nav="up">↑</button><button data-sim-nav="down">↓</button><button data-sim-nav="pagedown">PAGE ↓</button></div></div>
+    </section>${infoText()}${missionUI()}<div class="notice"><strong>⚠️ Только учебная имитация.</strong> Клавиши не связаны с реальным ЧПУ и не могут менять коррекции, параметры, программу, перемещать оси или запускать шпиндель. Состав экранов, soft keys и расположение кнопок у твоего EMCO могут отличаться — сверяй с руководством и наставником.</div>`;
+  }
+  function mainRender(){const app=document.getElementById('app');if(app && location.hash.startsWith('#simulator'))app.innerHTML=render();}
+  function paint(){mainRender();}
+  function setPage(page){if(!nav[page])return;missionTouched=true;s.page=page;s.tab=defaults[page];s.row=0;s.help=false;s.info=explain();taskMessage='';paint();}
+  function setTab(tab){if(!nav[s.page].tabs.some(x=>x[0]===tab))return;missionTouched=true;s.tab=tab;s.row=0;s.help=false;s.info=explain();taskMessage='';paint();}
+  document.addEventListener('click',ev=>{
+    if(!location.hash.startsWith('#simulator'))return;
+    const el=ev.target.closest('[data-sim-page],[data-sim-tab],[data-sim-key],[data-sim-nav],[data-sim-mission],[data-sim-check],[data-sim-hint]');
+    if(!el)return;
+    if(el.dataset.simPage){setPage(el.dataset.simPage);return;}
+    if(el.dataset.simTab){setTab(el.dataset.simTab);return;}
+    if(el.dataset.simNav){const num=s.page==='offset'&&s.tab==='WORK'?6:12;const dir=({up:-1,down:1,pageup:-4,pagedown:4})[el.dataset.simNav];s.row=Math.min(num-1,Math.max(0,s.row+dir));s.info='Выбранная строка: '+(s.tab==='WORK'?'G'+(54+s.row):'инструмент '+String(s.row+1).padStart(2,'0'))+'. Значения не изменены.';paint();return;}
+    if(el.dataset.simKey){const k=el.dataset.simKey;if(k==='CAN')s.entry=s.entry.slice(0,-1);else if(k==='RESET'){s.entry='';s.info='Учебный ввод очищен (настоящее ЧПУ не задействовано).';}else if(k==='HELP'){s.help=!s.help;s.info='';}else if(k==='INPUT'){s.info='Ввод не записывается. Это только симулятор; никаких коррекций и программ не изменено.';}else if(s.entry.length<42)s.entry+=k;paint();return;}
+    if(el.dataset.simMission){s.mission=Number(el.dataset.simMission);missionTouched=false;taskMessage='';paint();return;}
+    if(el.dataset.simHint){taskMessage='Подсказка: '+missions[s.mission].description;paint();return;}
+    if(el.dataset.simCheck){const m=missions[s.mission];if(m&&missionTouched&&m.test(s)){if(!s.completed.includes(s.mission))s.completed.push(s.mission);save();taskMessage='✅ Верно! '+m.why;}else taskMessage='Пока не совпало. Смотри цель задания и попробуй ещё раз.';paint();}
+  });
+  window.CncSimulator={render,mainRender,missions,nav};
+})();
+
+</script>
+  <script>
+/* NEXA CNC — учебный тренажёр G54 / X / Z. Не обращается к станку или сети. */
+(() => {
+  'use strict';
+  const STORAGE = 'nexa-cnc-trainer-v1';
+  const SCENARIOS = {
+    a: {label:'Сценарий A', machine:-246.250, target:40.000, measured:40.600, face:0.350},
+    b: {label:'Сценарий B', machine:-185.750, target:32.000, measured:31.400, face:-0.250}
+  };
+  const GROUPS = {
+    g54:{name:'G54',sub:'Ноль детали',icon:'◎',description:'Отличай рабочую систему координат от геометрии инструмента. В задачах ниже действует только упрощённая математическая модель.'},
+    x:{name:'Ось X',sub:'Диаметр резца',icon:'⌀',description:'Разбираем диаметр, радиус и GEOMETRY X. Здесь вычисляется ошибка размера, а не команда коррекции станка.'},
+    z:{name:'Ось Z',sub:'Торец и длина',icon:'↔',description:'Показываем роль торца Z0, геометрии Z и отклонения длины в учебном примере.'}
+  };
+  const tasks = [
+    {id:'g54-menu',group:'g54',type:'choice',title:'Найди экран G54',prompt:()=> 'Где искать рабочее смещение G54 в учебной модели FANUC?',options:['OFFSET / SETTING → GEOMETRY','OFFSET / SETTING → WORK','OFFSET / SETTING → WEAR'],answer:1,hint:'G54 относится ко всей рабочей системе координат детали, а не к отдельному резцу.',why:'Верно: WORK содержит рабочие системы G54–G59. GEOMETRY и WEAR относятся к инструменту.'},
+    {id:'g54-zero',group:'g54',type:'number',title:'Перенос начала координат',prompt:s=>`В абстрактной модели Zд = Zм − O, в точке желаемого Z0 значение Zм = ${fmt(s.machine)} мм. Какое O даст Zд = 0?`,formula:'Zд = Zм − O',answer:s=>s.machine,unit:'мм',hint:'Подставь Zд = 0. Тогда O = Zм. Учитывай отрицательный знак.',why:'Это только упражнение на перенос координат. Реальный рабочий сдвиг FANUC может учитывать внешний сдвиг, геометрию и настройки EMCO; не вводи это число в станок.'},
+    {id:'g54-meaning',group:'g54',type:'choice',title:'Что задаёт G54?',prompt:()=> 'Что описывает G54 в типичной токарной системе FANUC?',options:['Систему координат заготовки','Длину одного конкретного резца','Поправку на износ пластины'],answer:0,hint:'Подумай, что остаётся связано с деталью, даже когда меняешь резец.',why:'G54 выбирает рабочую систему координат. Привязка инструмента хранится отдельно.'},
+    {id:'x-screen',group:'x',type:'choice',title:'Базовая геометрия X',prompt:()=> 'В какой таблице в учебной модели хранится базовая геометрическая коррекция резца по X?',options:['WORK / G54','GEOMETRY / X','WEAR / Z'],answer:1,hint:'Ищи слово GEOMETRY и ось X.',why:'GEOMETRY X — базовая привязка инструмента. Номер позиции револьвера и номер коррекции необходимо проверять отдельно.'},
+    {id:'x-diameter',group:'x',type:'number',title:'Ошибка диаметра',prompt:s=>`На чертеже ⌀${fmt(s.target)} мм, после учебного прохода измерен ⌀${fmt(s.measured)} мм. Вычисли измеренный минус заданный диаметр (со знаком).`,formula:'ΔD = Dизм − Dзад',answer:s=>s.measured-s.target,unit:'мм',hint:'Из большего/меньшего измеренного диаметра вычти размер по чертежу. Результат может быть отрицательным.',why:'Это разница диаметров, НЕ готовое значение для WEAR X. Знак и величину реальной коррекции нельзя назначать без проверки режима X, ориентации резца и станка.'},
+    {id:'x-radius',group:'x',type:'number',title:'Диаметр ≠ радиус',prompt:s=>`Разница диаметров по модулю равна ${fmt(Math.abs(s.measured-s.target))} мм. Какова соответствующая разница радиусов по модулю?`,formula:'|ΔR| = |ΔD| ÷ 2',answer:s=>Math.abs(s.measured-s.target)/2,unit:'мм',hint:'Радиус — половина диаметра.',why:'При диаметральном задании X разница диаметра и радиального перемещения не одно и то же. Это не инструкция по знаку/величине износа на реальном ЧПУ.'},
+    {id:'z-face',group:'z',type:'choice',title:'Выбери торец Z0',prompt:()=> 'В нашем учебном примере Z0 принят на обработанном переднем торце детали. Где находится ноль по Z?',options:['На оси вращения шпинделя','На выбранной передней плоскости торца','В центре револьверной головки'],answer:1,hint:'Z здесь измеряет положение вдоль длины детали.',why:'В этой задаче передняя плоскость — Z0. На реальном станке выбор базы зависит от чертежа и наладки.'},
+    {id:'z-deviation',group:'z',type:'number',title:'Отклонение вдоль Z',prompt:s=>`В учебном контроле торца измерено смещение относительно заданной плоскости Z0: ${fmt(s.face)} мм. Каково абсолютное значение отклонения?`,formula:'|ΔZ| = модуль смещения',answer:s=>Math.abs(s.face),unit:'мм',hint:'Отрицательное число при взятии модуля становится положительным.',why:'Абсолютное отклонение показывает величину несовпадения. Оно само по себе не даёт безопасного значения коррекции на станке.'},
+    {id:'z-screen',group:'z',type:'choice',title:'Геометрия Z или G54?',prompt:()=> 'Нужно найти базовую геометрию по Z именно выбранного резца. Какой учебный экран открыть?',options:['GEOMETRY → Z','WORK → G54 X','MESSAGE → ALARM'],answer:0,hint:'Отдельный инструмент — отдельная геометрия.',why:'GEOMETRY Z относится к выбранной коррекции инструмента. G54 задаёт рабочую систему детали и не заменяет привязку каждого резца.'}
+  ];
+  let view = {group:'g54',index:0,scenario:'a',results:{},feedback:null,showHint:false};
+  try {
+    const stored=JSON.parse(localStorage.getItem(STORAGE)||'null');
+    if(stored && typeof stored==='object'){
+      if(Object.hasOwn(GROUPS,stored.group))view.group=stored.group;
+      if(Object.hasOwn(SCENARIOS,stored.scenario))view.scenario=stored.scenario;
+      if(stored.results && typeof stored.results==='object') for(const [k,v] of Object.entries(stored.results)) if(v===true && /^[ab]:(g54|x|z)-[a-z]+$/.test(k))view.results[k]=true;
+    }
+  } catch (_) { /* Блокировка localStorage не мешает обучению */ }
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt=n=>Number(n).toFixed(3);
+  const taskList=()=>tasks.filter(t=>t.group===view.group);
+  const activeTask=()=>taskList()[view.index]||taskList()[0];
+  const key=t=>view.scenario+':'+t.id;
+  const complete=t=>!!view.results[key(t)];
+  const count=()=>tasks.filter(complete).length;
+  const save=()=>{try{localStorage.setItem(STORAGE,JSON.stringify({group:view.group,scenario:view.scenario,results:view.results}));}catch(_) {}};
+  const parseNumber=value=>{
+    const raw=String(value??'').trim().replace(',','.');
+    if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(raw))return null;
+    const result=Number(raw);
+    return Number.isFinite(result)&&Math.abs(result)<1000000?result:null;
+  };
+  function evaluate(t,value){
+    if(t.type==='choice')return Number(value)===t.answer;
+    const n=parseNumber(value),expected=typeof t.answer==='function'?t.answer(SCENARIOS[view.scenario]):t.answer;
+    return n!==null&&Math.abs(n-expected)<=0.00101;
+  }
+  function diagram(){
+    const t=view.group; const highlight=t==='g54'?'#b697ff':t==='x'?'#69d9e9':'#ffc583';
+    return `<div class="ot-figure" role="img" aria-label="Условная схема токарной детали: ось Z вдоль детали, X поперёк, Z0 на переднем торце">
+      <svg viewBox="0 0 560 215" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" x2="0" y1="0" y2="10" stroke="#596682" stroke-width="3"/></pattern><linearGradient id="metal" x1="0" x2="1"><stop stop-color="#56627a"/><stop offset="0.55" stop-color="#919bac"/><stop offset="1" stop-color="#525d7a"/></linearGradient></defs>
+        <rect x="20" y="30" width="90" height="160" rx="7" fill="#384151" stroke="#71849e"/><rect x="48" y="30" width="11" height="160" fill="#626d82"/><rect x="85" y="50" width="44" height="120" rx="4" fill="url(#hatch)" stroke="#7d8da4"/>
+        <rect x="126" y="69" width="280" height="82" rx="3" fill="url(#metal)" stroke="#bec8d7"/><rect x="126" y="82" width="280" height="7" fill="#c4d0df" opacity=".35"/>
+        <line x1="12" y1="110" x2="532" y2="110" stroke="#89a1b8" opacity=".6" stroke-width="1" stroke-dasharray="7 7"/><line x1="406" y1="18" x2="406" y2="190" stroke="${t==='g54'||t==='z'?highlight:'#60768d'}" stroke-width="${t==='g54'||t==='z'?3:1.5}" stroke-dasharray="5 5"/>
+        <circle cx="406" cy="110" r="5" fill="${highlight}"/><line x1="406" y1="110" x2="535" y2="110" stroke="${highlight}" stroke-width="2"/><path d="M535 110l-9 -6v12z" fill="${highlight}"/><line x1="406" y1="110" x2="406" y2="19" stroke="${highlight}" stroke-width="2"/><path d="M406 19l-6 10h12z" fill="${highlight}"/>
+        <text x="537" y="103" font-size="14" fill="${highlight}" font-weight="bold">Z</text><text x="420" y="23" font-size="14" fill="${highlight}" font-weight="bold">X</text>
+        <text x="424" y="137" font-size="12" fill="#e6edfa">Z0</text><text x="28" y="207" fill="#95a5bb" font-size="11">Патрон</text><text x="190" y="61" fill="#dceaff" font-size="13">Учебная заготовка</text>
+        ${t==='x'?'<line x1="325" y1="69" x2="325" y2="151" stroke="'+highlight+'" stroke-width="3"/><path d="M325 69l-6 9h12zM325 151l-6 -9h12z" fill="'+highlight+'"/><text x="337" y="106" fill="'+highlight+'" font-size="15" font-weight="bold">⌀D</text>':''}
+        ${t==='z'?'<path d="M445 63l-12 7v-14z" fill="'+highlight+'"/><line x1="445" y1="63" x2="517" y2="63" stroke="'+highlight+'" stroke-dasharray="4 4"/><text x="449" y="53" fill="'+highlight+'" font-size="12">Торец Z0</text>':''}
+      </svg><div class="ot-legend"><span><i style="background:${highlight}"></i>${t==='g54'?'Система координат детали':t==='x'?'Ось X / диаметр':'Ось Z / торец'}</span><span>СХЕМА · НЕ В МАСШТАБЕ</span></div></div>`;
+  }
+  function taskView(){
+    const t=activeTask(),s=SCENARIOS[view.scenario],done=complete(t),feedback=view.feedback;
+    const contents=t.type==='choice'?
+      `<div class="ot-options" role="group" aria-label="Варианты ответа">${t.options.map((name,i)=>`<label class="ot-option"><input type="radio" name="ot-answer" value="${i}" ${view.feedback?.value===String(i)?'checked':''}><span class="ot-option-marker">${String.fromCharCode(65+i)}</span><span>${esc(name)}</span></label>`).join('')}</div>`:
+      `<div class="ot-equation">${esc(t.formula)}</div><label for="ot-number" class="ot-fieldlabel">Твой ответ, ${esc(t.unit)}</label><div class="ot-numberbox"><input id="ot-number" name="ot-answer" inputmode="decimal" type="text" autocomplete="off" maxlength="25" spellcheck="false" placeholder="Например: −0,350" value="${esc(view.feedback?.value||'')}" aria-describedby="ot-inputtip"><span>${esc(t.unit)}</span></div><small id="ot-inputtip" class="ot-helper">Можно вводить с точкой или запятой, если требуется — со знаком минус.</small>`;
+    return `<div class="ot-taskhead"><span class="ot-stepbadge">ЗАДАНИЕ ${view.index+1} / ${taskList().length}</span><span class="${done?'ot-complete':'ot-pending'}">${done?'✓ Решено':'○ Практика'}</span></div><h2 class="ot-tasktitle">${esc(t.title)}</h2><p class="ot-prompt">${esc(t.prompt(s))}</p><form id="ot-answer-form">${contents}<div class="ot-taskactions"><button type="submit" class="button">Проверить ответ <span aria-hidden="true">↗</span></button><button type="button" class="button secondary" data-ot-hint="1">${view.showHint?'Скрыть подсказку':'Подсказка'}</button></div></form>
+      ${view.showHint?`<div class="ot-hint">💡 ${esc(t.hint)}</div>`:''}${feedback?`<div class="ot-feedback ${feedback.good?'good':'bad'}" role="status"><b>${feedback.good?'✓ Отлично, правильно!':'↻ Пока не совпало'}</b><p>${feedback.good?esc(t.why):esc(feedback.message||'Попробуй ещё раз, а если сложно — открой подсказку.')}</p></div>`:''}<div class="ot-taskfoot"><button class="button ghost" data-ot-prev="1" ${view.index===0?'disabled':''}>← Назад</button><button class="button secondary" data-ot-next="1" ${view.index===taskList().length-1?'disabled':''}>Следующий шаг →</button></div>`;
+  }
+  function render(){
+    const chosen=GROUPS[view.group],n=count(),all=tasks.length;
+    return `<button class="back" data-go="home">← Главная</button>
+      <div class="ot-headline"><div><p class="eyebrow">NEXA CNC 0.2 / УЧЕБНАЯ ЛАБОРАТОРИЯ</p><h1 class="page-title">Привязка <span>X / Z / G54</span></h1><p class="subtitle">Интерактивные задания на понимание координат, диаметров и коррекций. Для FANUC 0i‑TD на твоём EMCOturn.</p></div><span class="ot-live">● SIMULATION ONLY</span></div>
+      <div class="ot-warning"><b>⚠️ Это учебная модель, не процедура наладки.</b><span>Показанные цифры вымышлены и НЕ являются значениями для ввода в станок. Реальная настройка зависит от оснастки, геометрии, G50, внешних сдвигов и параметров EMCO/FANUC. Работай по инструкции предприятия с наставником.</span></div>
+      <div class="ot-stat"><div><span class="ot-statlabel">ТВОЙ ПРОГРЕСС</span><b>${n} <small>/ ${all}</small></b></div><div class="ot-progress"><div style="width:${Math.round(n*100/all)}%"></div></div><span class="ot-percent">${Math.round(n*100/all)}%</span></div>
+      <div class="ot-toolbar"><span>Учебный набор</span><select id="ot-scenario" aria-label="Выбрать сценарий"><option value="a" ${view.scenario==='a'?'selected':''}>Сценарий A</option><option value="b" ${view.scenario==='b'?'selected':''}>Сценарий B</option></select></div>
+      <div class="ot-tabs" role="group" aria-label="Выбери раздел тренажёра">${Object.entries(GROUPS).map(([id,g])=>`<button class="ot-tab ${view.group===id?'active':''}" data-ot-group="${id}" aria-pressed="${view.group===id}"><span class="ot-tab-ico">${g.icon}</span><strong>${g.name}</strong><small>${tasks.filter(t=>t.group===id&&complete(t)).length}/3</small></button>`).join('')}</div>
+      <section class="ot-section"><div class="ot-sectiontop"><span class="ot-chapter">МОДУЛЬ ${view.group==='g54'?'01':view.group==='x'?'02':'03'} / ${esc(chosen.sub.toUpperCase())}</span><h2>${esc(chosen.name)} <span>· ${esc(chosen.sub)}</span></h2><p>${esc(chosen.description)}</p></div>
+      ${diagram()}<div class="ot-pillrow">${taskList().map((t,i)=>`<button class="ot-pill ${i===view.index?'active':''} ${complete(t)?'done':''}" data-ot-index="${i}" aria-label="Задание ${i+1}${complete(t)?', выполнено':''}" aria-pressed="${i===view.index}">${complete(t)?'✓':i+1}</button>`).join('')}</div><div class="ot-task">${taskView()}</div></section>
+      ${n===all?'<div class="ot-winner">🏆 Все задания сценария выполнены! Попробуй другой сценарий или открой виртуальный пульт.</div>':''}
+      <div class="ot-footer"><button class="button secondary" data-go="simulator">🎛️ Перейти к пульту FANUC</button><button class="button ghost" data-ot-reset="1">↺ Сбросить прогресс сценария</button></div>
+      <p class="ot-source">Учебная теория: FANUC Series 0i-D Operator’s Manual (B-64304EN/03). Экраны и математические модели упрощены; приложение не подключено к оборудованию.</p>`;
+  }
+  function rerender(){ if(location.hash.startsWith('#trainer')){const target=document.getElementById('app');if(target)target.innerHTML=render();} }
+  function navigate(part,index=0){view.group=part;view.index=index;view.feedback=null;view.showHint=false;save();rerender();}
+  document.addEventListener('click',ev=>{
+    if(!location.hash.startsWith('#trainer'))return;
+    const el=ev.target.closest('[data-ot-group],[data-ot-index],[data-ot-prev],[data-ot-next],[data-ot-hint],[data-ot-reset]');
+    if(!el)return;
+    if(el.hasAttribute('data-ot-group')){if(Object.hasOwn(GROUPS,el.dataset.otGroup))navigate(el.dataset.otGroup);return;}
+    if(el.hasAttribute('data-ot-index')){const i=Number(el.dataset.otIndex);if(Number.isInteger(i)&&i>=0&&i<taskList().length)navigate(view.group,i);return;}
+    if(el.hasAttribute('data-ot-prev')){navigate(view.group,Math.max(view.index-1,0));return;}
+    if(el.hasAttribute('data-ot-next')){const i=Math.min(view.index+1,taskList().length-1);navigate(view.group,i);return;}
+    if(el.hasAttribute('data-ot-hint')){view.showHint=!view.showHint;rerender();return;}
+    if(el.hasAttribute('data-ot-reset')&&confirm('Удалить результаты текущего сценария? Остальные данные NEXA CNC не затронутся.')){
+      for(const key of Object.keys(view.results))if(key.startsWith(view.scenario+':'))delete view.results[key];view.feedback=null;save();rerender();return;
+    }
+  });
+  document.addEventListener('change',ev=>{
+    if(location.hash.startsWith('#trainer')&&ev.target.id==='ot-scenario'&&Object.hasOwn(SCENARIOS,ev.target.value)){
+      view.scenario=ev.target.value;view.index=0;view.feedback=null;view.showHint=false;save();rerender();
+    }
+  });
+  document.addEventListener('submit',ev=>{
+    if(ev.target.id!=='ot-answer-form'||!location.hash.startsWith('#trainer'))return;
+    ev.preventDefault();
+    const t=activeTask();let input;
+    if(t.type==='number')input=ev.target.querySelector('#ot-number')?.value;
+    else input=ev.target.querySelector('input[name="ot-answer"]:checked')?.value;
+    if(input===undefined||input===null||input===''){
+      view.feedback={good:false,message:'Сначала выбери вариант или введи число.'};rerender();return;
+    }
+    const good=evaluate(t,input);
+    if(good){view.results[key(t)]=true;save();}
+    view.feedback={good,value:String(input),message:good?'':t.type==='number'&&parseNumber(input)===null?'Проверь формат числа: используй цифры, точку или запятую и знак минус при необходимости.':'Проверь определение и расчёт. Числа в примере учебные.'};
+    rerender();
+  });
+  window.CncOffsetTrainer={render,tasks,SCENARIOS,parseNumber,evaluate,getProgress:()=>count()};
+})();
+
+</script>
+  <script>
+/* NEXA CNC 0.2 WEB — offline app. No network requests or machine control. */
+(() => {
+  'use strict';
+  const D = window.CncData;
+  let state = D.defaultState();
+  let route = 'home', activeLesson = 'g54', toolPosition = 1;
+  let photoDraft = '', saveChain = Promise.resolve(), db = null, storageMode = 'indexeddb';
+  const app = document.getElementById('app');
+  const safe = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const pct = (done,total) => total ? Math.round(100*done/total) : 0;
+  const completed = l => (state.lessonChecks[l.id] || []).filter(Boolean).length;
+  const showToast = msg => { const el=document.getElementById('toast'); el.textContent=msg;el.style.display='block';clearTimeout(showToast.t);showToast.t=setTimeout(()=>el.style.display='none',3500); };
+  async function loadStore() {
+    try {
+      db = await new Promise((resolve,reject) => {
+        const req = indexedDB.open('nexa-cnc-data-v1',1);
+        req.onupgradeneeded=()=>req.result.createObjectStore('store');
+        req.onsuccess=()=>resolve(req.result);
+        req.onerror=()=>reject(req.error);
+      });
+      const saved = await new Promise((resolve,reject) => {
+        const req=db.transaction('store').objectStore('store').get('state');
+        req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+      });
+      if (saved) state=D.normalizeState(saved);
+    } catch (e) {
+      storageMode='localStorage';
+      try {const s=localStorage.getItem('nexa-cnc-v1'); if(s)state=D.normalizeState(JSON.parse(s));}
+      catch {showToast('Память недоступна: данные могут не сохраниться');}
+    }
+  }
+  function persist() {
+    state.lastUpdated=new Date().toISOString();
+    const snapshot=JSON.parse(JSON.stringify(state));
+    saveChain=saveChain.catch(()=>{}).then(async()=>{
+      if (storageMode==='indexeddb') {
+        await new Promise((resolve,reject)=>{
+          const tx=db.transaction('store','readwrite');
+          tx.objectStore('store').put(snapshot,'state');
+          tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);
+        });
+      } else localStorage.setItem('nexa-cnc-v1',JSON.stringify(snapshot));
+    }).catch(err=>{showToast('⚠️ Не удалось сохранить данные! Сделай резервную копию.');throw err;});
+    return saveChain;
+  }
+  function nav(next, detail) {
+    if (next==='lesson') activeLesson=detail || activeLesson;
+    route=next;
+    const hash=next==='lesson'?'lesson/'+activeLesson:next;
+    if (location.hash.slice(1)!==hash) history.pushState(null,'','#'+hash);
+    render();window.scrollTo({top:0,behavior:'instant'});
+  }
+  function syncHash(){const raw=decodeURIComponent(location.hash.slice(1)); const [section, detail]=raw.split('/');
+    if(['home','lessons','lesson','tools','codes','diary','settings','calc','preflight','simulator','trainer'].includes(section)) {route=section;if(section==='lesson'&&D.lessons.some(l=>l.id===detail))activeLesson=detail;}
+    else route='home';render();
+  }
+  function header(eye,title,sub){return `<p class="eyebrow">${safe(eye)}</p><h1 class="page-title">${title}</h1>${sub?`<p class="subtitle">${sub}</p>`:''}`;}
+  function alert(){return `<div class="notice"><strong>⚠️ Безопасность:</strong> это учебная шпаргалка, а не инструкция по пуску станка. Перед изменением коррекций и перемещениями сверяйся с документацией именно твоего EMCO и ответственным наладчиком.</div>`;}
+  function percentBar(value){return `<div class="progress" role="progressbar" aria-valuenow="${value}" aria-valuemin="0" aria-valuemax="100"><div style="width:${value}%"></div></div>`;}
+  function renderHome(){
+    const done=D.lessons.reduce((n,l)=>n+completed(l),0), total=D.lessons.reduce((n,l)=>n+l.steps.length,0);
+    return `<div class="hero"><span class="tag green">● ОБУЧЕНИЕ БЕЗ ИНТЕРНЕТА</span><h1>Твой ЧПУ.<br><span style="color:#c59bff">Твои правила роста.</span></h1><p>Практический помощник по FANUC 0i‑TD. Тренажёр G54 и резцов X/Z, виртуальный пульт, уроки и дневник наладки.</p><div class="inline-actions"><button class="button" data-go="trainer">🧪 Тренажёр X / Z / G54 →</button><button class="button secondary" data-go="simulator">🎛️ Пульт FANUC</button><button class="button secondary" data-go="lesson" data-detail="g54">🎯 Урок G54</button></div></div>
+    <div class="section-head"><h2>Мой прогресс</h2><small>${done} из ${total} шагов</small></div><div class="statbar"><div><strong>${pct(done,total)}%</strong><div class="muted" style="font-size:12px">Учебные шаги</div></div><span class="tag">${safe(state.machine)}</span></div>${percentBar(pct(done,total))}
+    <div class="section-head"><h2>Быстрый доступ</h2><small>Под рукой у станка</small></div><div class="grid2">
+      <button class="action-card" data-go="trainer"><span class="card-ico">🧪</span><strong>Тренажёр X / Z / G54</strong><small>9 заданий, 2 сценария · NEW</small></button>
+      <button class="action-card" data-go="simulator"><span class="card-ico">🎛️</span><strong>Виртуальный пульт</strong><small>Интерактивный FANUC 0i‑TD · NEW</small></button>
+      <button class="action-card" data-go="lesson" data-detail="g54"><span class="card-ico">🎯</span><strong>Привязка G54</strong><small>Рабочий ноль детали</small></button>
+      <button class="action-card" data-go="lesson" data-detail="x"><span class="card-ico">📏</span><strong>Коррекция X</strong><small>Геометрия по диаметру</small></button>
+      <button class="action-card" data-go="lesson" data-detail="z"><span class="card-ico">↔️</span><strong>Коррекция Z</strong><small>Геометрия по торцу</small></button>
+      <button class="action-card" data-go="preflight"><span class="card-ico">🛡️</span><strong>Я у станка</strong><small>Чек-лист подготовки</small></button>
+      <button class="action-card" data-go="calc"><span class="card-ico">🧮</span><strong>Калькулятор</strong><small>Обороты и подача</small></button>
+      <button class="action-card" data-go="settings"><span class="card-ico">⚙️</span><strong>Мои данные</strong><small>Настройки и резервная копия</small></button>
+    </div>${alert()}`;
+  }
+  function renderLessons(){return header('01 / ОБУЧЕНИЕ','Уроки <span>FANUC</span>','Короткие объяснения и контрольные этапы. Отмеченные шаги сохраняются на устройстве.')+
+    D.lessons.map(l=>`<button class="lesson-card" style="margin-bottom:10px" data-go="lesson" data-detail="${l.id}"><div class="lesson-card-row"><span class="card-ico">${l.icon}</span><div><strong>${safe(l.name)}</strong><small>${safe(l.short)}</small></div></div>${percentBar(pct(completed(l),l.steps.length))}<span class="tag">${completed(l)} / ${l.steps.length} · ${safe(l.tag)}</span></button>`).join('')+alert();}
+  function renderLesson(){const l=D.lessons.find(x=>x.id===activeLesson)||D.lessons[0]; const checks=state.lessonChecks[l.id]||[];
+    return `<button class="back" data-go="lessons">← Все уроки</button>`+header('УЧЕБНАЯ КАРТОЧКА',`${l.icon} ${safe(l.name)}`,safe(l.intro))+
+      `<div class="statbar"><div><strong>${completed(l)}/${l.steps.length}</strong><div class="muted" style="font-size:12px">Пройденные пункты</div></div><span class="tag">${safe(l.tag)}</span></div>${percentBar(pct(completed(l),l.steps.length))}`+
+      `<div class="section-head"><h2>Порядок изучения</h2></div>`+l.steps.map(([title,detail],i)=>`<div class="step ${checks[i]?'checked':''}"><input type="checkbox" id="lesson-${l.id}-${i}" data-lesson-check="${l.id}" data-index="${i}" ${checks[i]?'checked':''}><label for="lesson-${l.id}-${i}"><strong>${i+1}. ${safe(title)}</strong><p>${safe(detail)}</p></label></div>`).join('')+
+      `<div class="panel"><strong>📓 Запиши свой опыт</strong><p class="muted" style="font-size:13px">Как именно этот шаг выполняется на твоём станке? Добавь заметку и фотографию панели.</p><button class="button secondary" data-go="diary">Открыть дневник →</button></div>${alert()}`;}
+  function renderTools(){const t=state.tools[toolPosition-1];
+    return header('02 / РЕВОЛЬВЕРНАЯ ГОЛОВКА','Мои <span>резцы</span>','12 позиций. Сохраняй установленную оснастку и свои измерения. Эти записи не передаются на станок.')+
+      `<div class="tool-grid">${state.tools.map(x=>`<button class="tool-btn ${x.position===toolPosition?'active':''} ${x.name?'has-data':''}" data-tool="${x.position}"><span class="tool-no">T${String(x.position).padStart(2,'0')}</span><small>${safe(x.name||'Пусто')}</small></button>`).join('')}</div>`+
+      `<div class="panel"><h2 style="margin-top:0;font-size:19px">Позиция T${String(toolPosition).padStart(2,'0')}</h2><form id="tool-form"><div class="field"><label for="tool-name">Название инструмента</label><input id="tool-name" maxlength="90" value="${safe(t.name)}" placeholder="Например: проходной наружный"></div><div class="field"><label for="tool-kind">Тип / пластина</label><input id="tool-kind" maxlength="90" value="${safe(t.kind)}" placeholder="Например: CNMG"></div><div class="grid2"><div class="field"><label for="tool-x">Запись X</label><input id="tool-x" maxlength="90" value="${safe(t.x)}" placeholder="Моё измерение"></div><div class="field"><label for="tool-z">Запись Z</label><input id="tool-z" maxlength="90" value="${safe(t.z)}" placeholder="Моё измерение"></div></div><div class="field"><label for="tool-note">Примечание</label><textarea id="tool-note" maxlength="600" placeholder="Вылет, радиус, особенности…">${safe(t.note)}</textarea></div><button type="submit" class="button full">💾 Сохранить позицию</button></form></div><p class="preview-note">Важно: номер позиции T и номер коррекции могут не совпадать. Поля X/Z здесь — личные заметки, не активные параметры станка.</p>${alert()}`;
+  }
+  function codeCards(query=''){const q=query.trim().toLowerCase();const items=D.codes.filter(x=>x.join(' ').toLowerCase().includes(q));return items.length ? items.map(([code,name,hint])=>`<div class="code-card"><code>${safe(code)}</code><strong>${safe(name)}</strong><small>${safe(hint)}</small></div>`).join('') : `<p class="muted">Ничего не найдено.</p>`;}
+  function renderCodes(){return header('03 / КАРМАННЫЙ СПРАВОЧНИК','G / M <span>коды</span>','Значение команд для обучения. Формат циклов и M-коды обязательно проверять по руководству конкретного станка.')+
+    `<div class="field"><label for="code-search">Поиск кода или названия</label><input id="code-search" type="search" placeholder="Например: G71, шпиндель, резьба" autocomplete="off"></div><div class="code-list" id="code-results">${codeCards()}</div>${alert()}`;}
+  function renderDiary(){return header('04 / ЛИЧНЫЙ ОПЫТ','Дневник <span>токаря</span>','Записывай то, что уже проверил вместе с наставником. Можно приложить фотографию с телефона.')+
+    `<div class="panel"><h2 style="margin-top:0;font-size:18px">Новая заметка</h2><form id="diary-form"><div class="field"><label for="diary-text">Что сегодня изучил?</label><textarea id="diary-text" required maxlength="3000" rows="4" placeholder="Например: где находится вкладка OFFSET на нашем EMCO…"></textarea></div><div class="field"><label for="diary-photo">Фотография панели или конспекта (необязательно)</label><input id="diary-photo" type="file" accept="image/*"><small class="muted" id="photo-status">${photoDraft?'Фото подготовлено':'Изображение будет уменьшено для хранения офлайн'}</small></div><button class="button full" type="submit">＋ Сохранить заметку</button></form></div>
+    <div class="section-head"><h2>Мои записи</h2><small>${state.diary.length} шт.</small></div>${state.diary.length?state.diary.map(item=>`<article class="record"><span class="date">${safe(item.date)}</span><p>${safe(item.text)}</p>${item.photo?`<img src="${item.photo}" alt="Фото к заметке" loading="lazy">`:''}<div class="record-actions"><button class="button ghost" data-delete-note="${safe(item.id)}">Удалить</button></div></article>`).join(''):'<div class="panel muted">Пока пусто. Первая запись — первый шаг к уверенной работе! ⚙️</div>'}<p class="preview-note">Заметки хранятся только на этом устройстве. Регулярно сохраняй резервную копию в настройках.</p>`;}
+  function renderPreflight(){const items=[['guard','Ограждения, зона и аварийный останов проверены'],['clamp','Заготовка и инструмент надёжно закреплены'],['program','Нужная программа и инструмент проверены'],['offsets','Активная система координат и коррекции проверены'],['dryrun','Безопасная проверка траектории согласована']];
+    return `<button class="back" data-go="home">← Главная</button>`+header('РЕЖИМ «Я У СТАНКА»','Контрольный <span>лист</span>','Отмечай только реально выполненные проверки. Это памятка, а не автоматическое подтверждение безопасности.')+
+    `<div class="panel"><div class="checklist">${items.map(([key,label])=>`<div class="checkitem"><input type="checkbox" id="pf-${key}" data-pf="${key}" ${state.checks[key]?'checked':''}><label for="pf-${key}">${safe(label)}</label></div>`).join('')}</div><hr class="thin"><button class="button secondary" data-reset-pf="1">Сбросить список перед новой наладкой</button></div>`+
+    `<div class="notice"><strong>Даже если все пункты отмечены,</strong> это не разрешение запускать станок. Руководствуйся инструкцией предприятия и проверкой ответственного специалиста.</div>`;}
+  function renderCalc(){return `<button class="back" data-go="home">← Главная</button>`+header('05 / РАСЧЁТ','Калькулятор <span>резания</span>','Теоретический расчёт оборотов и минутной подачи. Не используй результат как готовый режим без учёта материала, инструмента и ограничений станка.')+
+    `<div class="panel"><div class="field"><label for="vc">Скорость резания Vc (м/мин)</label><input type="number" min="0.01" max="10000" step="any" id="vc" value="120"></div><div class="field"><label for="diameter">Диаметр D (мм)</label><input type="number" min="0.01" max="10000" step="any" id="diameter" value="40"></div><div class="field"><label for="feed">Подача f (мм/оборот)</label><input type="number" min="0.001" max="100" step="any" id="feed" value="0.15"></div><hr class="thin"><div class="muted" style="font-size:12px">Расчётные обороты шпинделя</div><div id="rpm-out" class="calc-result"></div><div class="muted" style="font-size:12px">Расчётная подача в минуту</div><div id="feed-out" class="calc-result"></div><p class="preview-note">Формулы: n = (1000 × Vc) / (π × D); Vf = n × f. Для режима G96 обороты меняются с диаметром; соблюдай ограничение оборотов по станку и патрону.</p></div>${alert()}`;}
+  function renderSettings(){return header('06 / ПРОФИЛЬ','Мои <span>настройки</span>','Профиль станка и сохранение данных без облака.')+
+    `<div class="panel"><div class="field"><label for="machine-name">Мой станок</label><input id="machine-name" maxlength="120" value="${safe(state.machine)}"></div><button class="button secondary" id="save-machine">Сохранить название</button><hr class="thin"><h2 style="font-size:17px">Резервная копия</h2><p class="muted" style="font-size:13px">Экспортирует уроки, инструменты и дневник с фотографиями в JSON. Импорт заменит текущие данные.</p><div class="inline-actions"><button class="button" id="export-btn">⬇ Экспорт JSON</button><button class="button secondary" id="import-btn">⬆ Импорт JSON</button><input type="file" id="import-file" accept="application/json,.json" style="display:none"></div></div><div class="panel"><strong>🔐 Конфиденциальность</strong><p class="muted" style="font-size:13px">NEXA CNC 0.2 WEB работает без учётной записи, интернета, рекламы и подключения к ЧПУ. Фото и заметки остаются в памяти приложения, пока ты их не экспортируешь или не удалишь.</p><p class="preview-note">Версия 0.2.1 WEB · экспериментальный учебный помощник · учебные карточки требуют проверки под конкретный EMCO.</p></div>${alert()}`;}
+  function render(){
+    const screens={home:renderHome,lessons:renderLessons,lesson:renderLesson,tools:renderTools,codes:renderCodes,diary:renderDiary,preflight:renderPreflight,calc:renderCalc,settings:renderSettings,simulator:()=>window.CncSimulator.render(),trainer:()=>window.CncOffsetTrainer.render()};
+    app.innerHTML=(screens[route]||renderHome)();
+    document.querySelectorAll('.bottomnav button').forEach(b=>{const on=b.dataset.route===route ||(route==='lesson'&&b.dataset.route==='lessons')||(route==='preflight'&&b.dataset.route==='home');b.classList.toggle('active',on);b.setAttribute('aria-current',on?'page':'false');});
+    if(route==='calc')recalculate();
+  }
+  function recalculate(){const vc=Number(document.getElementById('vc')?.value), dia=Number(document.getElementById('diameter')?.value),f=Number(document.getElementById('feed')?.value);
+    const n=D.rpm(vc,dia),v=D.mmMin(f,n);
+    document.getElementById('rpm-out').innerHTML=n&&n<=1000000?`${Math.round(n).toLocaleString('ru-RU')} <small>об/мин</small>`:'—';
+    document.getElementById('feed-out').innerHTML=v&&v<=10000000?`${Math.round(v).toLocaleString('ru-RU')} <small>мм/мин</small>`:'—';}
+  function photoFromFile(file){return new Promise((resolve,reject)=>{
+    if(!file || !file.type.startsWith('image/')||file.size>15*1024*1024)return reject(new Error('Выбери изображение до 15 МБ'));
+    const url=URL.createObjectURL(file), img=new Image();
+    img.onload=()=>{try{const max=960,r=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*r));c.height=Math.max(1,Math.round(img.height*r));c.getContext('2d').drawImage(img,0,0,c.width,c.height);const output=c.toDataURL('image/jpeg',.7);URL.revokeObjectURL(url);if(output.length>590000)throw new Error('Фото слишком большое после сжатия');resolve(output);}catch(e){reject(e);}};
+    img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Не удалось открыть фото'));};img.src=url;
+  });}
+  function exportBackup(){const payload=JSON.stringify(state,null,2);
+    if(new TextEncoder().encode(payload).length>8*1024*1024){showToast('Копия больше 8 МБ: уменьши число фото');return;}
+    if(window.Native && typeof window.Native.saveBackup==='function'){window.Native.saveBackup(payload);return;}
+    const blob=new Blob([payload],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='NEXA-CNC-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);
+  }
+  async function importBackup(text){try{if(text.length>8*1024*1024)throw new Error('Резервная копия превышает 8 МБ');const raw=JSON.parse(text);if(!raw||raw.version!==1||!Array.isArray(raw.tools)||!Array.isArray(raw.diary))throw new Error('Неверный формат NEXA CNC');if(!window.confirm('Заменить все текущие записи данными из резервной копии?'))return;state=D.normalizeState(raw);await persist();route='home';photoDraft='';render();showToast('✅ Резервная копия восстановлена');}catch(e){showToast('Ошибка импорта: '+String(e.message||e));}}
+  window.NEXA_import=importBackup;
+  document.addEventListener('click',async e=>{
+    const navBtn=e.target.closest('[data-route],[data-go]');if(navBtn){nav(navBtn.dataset.go||navBtn.dataset.route,navBtn.dataset.detail);return;}
+    const toolBtn=e.target.closest('[data-tool]');if(toolBtn){toolPosition=Number(toolBtn.dataset.tool);render();return;}
+    const del=e.target.closest('[data-delete-note]');if(del){if(confirm('Удалить эту заметку и прикреплённое фото?')){state.diary=state.diary.filter(n=>n.id!==del.dataset.deleteNote);await persist();render();showToast('Запись удалена');}return;}
+    if(e.target.closest('[data-reset-pf]')){state.checks={};await persist();render();showToast('Список сброшен');return;}
+    if(e.target.id==='save-machine'){state.machine=document.getElementById('machine-name').value.trim().slice(0,120)||'EMCOturn · FANUC 0i-TD';await persist();showToast('Станок сохранён');return;}
+    if(e.target.id==='export-btn'){exportBackup();return;}
+    if(e.target.id==='import-btn'){if(window.Native&&typeof window.Native.openBackup==='function')window.Native.openBackup();else document.getElementById('import-file').click();}
+  });
+  document.addEventListener('change',async e=>{
+    const el=e.target;
+    if(el.matches('[data-lesson-check]')){const id=el.dataset.lessonCheck, lesson=D.lessons.find(l=>l.id===id),i=Number(el.dataset.index);if(!lesson||!(i>=0&&i<lesson.steps.length))return;if(!state.lessonChecks[id])state.lessonChecks[id]=Array(lesson.steps.length).fill(false);state.lessonChecks[id][i]=el.checked;await persist();render();return;}
+    if(el.matches('[data-pf]')){state.checks[el.dataset.pf]=el.checked;await persist();return;}
+    if(el.id==='diary-photo'&&el.files?.length){document.getElementById('photo-status').textContent='Обрабатываю фото…';try{photoDraft=await photoFromFile(el.files[0]);document.getElementById('photo-status').textContent='✅ Фото готово, сохранится вместе с заметкой';}catch(err){photoDraft='';document.getElementById('photo-status').textContent='⚠️ '+err.message;}}
+    if(el.id==='import-file'&&el.files?.length){const file=el.files[0];if(file.size>8*1024*1024){showToast('Файл слишком большой');return;}await importBackup(await file.text());el.value='';}
+  });
+  document.addEventListener('input',e=>{if(e.target.id==='code-search')document.getElementById('code-results').innerHTML=codeCards(e.target.value);if(['vc','diameter','feed'].includes(e.target.id))recalculate();});
+  document.addEventListener('submit',async e=>{
+    if(e.target.id==='tool-form'){e.preventDefault();const t=state.tools[toolPosition-1];t.name=document.getElementById('tool-name').value.trim();t.kind=document.getElementById('tool-kind').value.trim();t.x=document.getElementById('tool-x').value.trim();t.z=document.getElementById('tool-z').value.trim();t.note=document.getElementById('tool-note').value.trim();await persist();render();showToast(`✅ Позиция T${toolPosition} сохранена`);}
+    if(e.target.id==='diary-form'){e.preventDefault();const text=document.getElementById('diary-text').value.trim();if(!text){showToast('Добавь текст заметки');return;}state.diary.unshift({id:String(Date.now())+'-'+Math.random().toString(36).slice(2,8),date:new Date().toLocaleString('ru-RU'),text:text.slice(0,3000),photo:photoDraft});state.diary=state.diary.slice(0,150);try{await persist();photoDraft='';render();showToast('✅ Заметка сохранена');}catch{state.diary.shift();}}
+  });
+  window.addEventListener('hashchange',syncHash);window.addEventListener('popstate',syncHash);
+  loadStore().then(syncHash).catch(err=>{app.textContent='Не удалось запустить приложение: '+err.message;});
+})();
+
+</script>
+</body>
+</html>
